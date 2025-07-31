@@ -1,0 +1,25 @@
+name: Automatizar procesamiento Excel
+
+on:
+  schedule:
+    - cron: "0 12 * * *"  # Ejecuta todos los días a las 7am Perú (12 UTC)
+  workflow_dispatch:      # Permite ejecutarlo manualmente también
+
+jobs:
+  ejecutar-script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar repositorio
+      uses: actions/checkout@v3
+
+    - name: Instalar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Instalar dependencias
+      run: pip install pandas openpyxl
+
+    - name: Ejecutar script
+      run: python procesar_excel.py
